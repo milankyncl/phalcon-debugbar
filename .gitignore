@@ -1,0 +1,16 @@
+gulpfile.js
+package.json
+/node_modules
+/src/assets/src
+.DS_Store
+.idea
+*.sublime-project
+*.sublime-workspace
+composer.lock
+composgit per.phar
+/nbproject
+/vendor
+.vagrant
+Vagrantfile
+/build
+/tests
