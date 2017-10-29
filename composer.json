@@ -3,7 +3,7 @@
     "description": "Phalcon Debugbar for Phalcon 3.x.x",
     "type": "library",
     "license": "MIT",
-    "minimum-stability" : "dev",
+    "minimum-stability" : "stable",
     "authors": [
         {
             "name": "Milan Kyncl",
