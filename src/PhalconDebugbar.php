@@ -16,7 +16,7 @@ class PhalconDebugbar {
 
 	protected $di;
 
-	private $_timer;
+	private $_debugMode = false;
 
 	/**
 	 * @var $_bar Bar
@@ -24,74 +24,82 @@ class PhalconDebugbar {
 
 	private $_bar;
 
-	function __construct(Di $di) {
+	function __construct() {
 
-		$this->di = $di;
-
-		$this->timer('boot');
+		$this->_bar = new Bar();
 
 	}
 
-	/**
-	 * Timer methods
-	 */
+	public function listen() {
 
-	private function timer($name) {
+		if($this->isDebugMode()) {
 
-		$this->_timer[$name] = microtime(true);
+			/**
+			 * Add Panels
+			 */
 
-	}
+			$this->_bar->addPanel(new \MilanKyncl\Debugbar\Bar\Panels\ExecutionTimer());
 
-	private function getTimerDelay($start, $end) {
+			$this->_bar->addPanel(new \MilanKyncl\Debugbar\Bar\Panels\DatabaseProfiler());
 
-		$delay = ($this->_timer[$end] - $this->_timer[$start]) * 1000;
-
-		return round($delay, 1);
-
-	}
-
-	/**
-	 * Bar methods
-	 */
-
-	public function renderBar() {
-
-		echo PHP_EOL . $this->_bar->render();
-
-	}
-
-	public function shutdown() {
-
-		$this->timer('shutdown');
-
-		$this->_bar->addPanel([
-			'label' => $this->getTimerDelay('boot', 'shutdown') . ' ms',
-			'icon' => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60"><path d="M30,0a1,1,0,0,0-1,1V14.29a1,1,0,1,0,2,0V2a28,28,0,1,1-20.83,8.22A1,1,0,0,0,8.75,8.82,30,30,0,1,0,30,0Z"/><path d="M28.56,33.53A3.56,3.56,0,0,0,31.16,35h0.28a3.56,3.56,0,0,0,2.09-6.45L20.59,19.19a1,1,0,0,0-1.4,1.4Zm3.8-3.36a1.56,1.56,0,1,1-2.18,2.19l-5.71-7.9Z"/></svg>'
-		]);
-
-		$this->renderBar();
-
-	}
-
-	const DEVELOPMENT = true,
-		  PRODUCTION = false;
-
-	/**
-	 * @param $debugMode bool
-	 */
-
-	public function enable($debugMode) {
-
-		if($debugMode) {
-
-			//$databaseConnection = $this->di->get('db');
-
-			$this->_bar = new Bar();
+			// Register shutdown function
 
 			register_shutdown_function([$this, 'shutdown']);
 
 		}
 
 	}
+
+	public function shutdown() {
+
+		$this->_bar->shutdownPanels();
+
+		$this->_bar->render();
+
+	}
+
+	/**
+	 * Set debug mode for IP or with Bool
+	 *
+	 * @param $debug bool|array
+	 */
+
+	public function setDebugMode($debug) {
+
+		if(is_array($debug)) {
+
+			foreach($debug as $ip) {
+
+				if($_SERVER['REMOTE_ADDR'] == $ip)
+					$this->_debugMode = true;
+
+			}
+
+		} else {
+
+			$this->_debugMode = $debug;
+
+		}
+
+	}
+
+	/**
+	 * Get if debug mode is on
+	 *
+	 * @return bool
+	 */
+
+	public function isDebugMode() {
+
+		return $this->_debugMode;
+
+	}
+
+	/**
+	 * Class constants
+	 */
+
+	const DEVELOPMENT = true,
+		  PRODUCTION = false;
 
 }

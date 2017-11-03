@@ -18,12 +18,10 @@ return function($panels) { ?>
 
             <li>
                 <a href="#">
-					<?php if(isset($panel['icon'])): ?>
                     <div class="debugbar-icon">
-                        <?= $panel['icon'] ?>
+                        <?= $panel->getIcon() ?>
                     </div>
-                    <?php endif ?>
-                    <span class="debugbar-label"><?= $panel['label'] ?></span>
+                    <span class="debugbar-label"><?= $panel->getLabel() ?></span>
                 </a>
             </li>
 
