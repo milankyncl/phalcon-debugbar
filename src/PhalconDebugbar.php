@@ -38,9 +38,13 @@ class PhalconDebugbar {
 			 * Add Panels
 			 */
 
-			$this->_bar->addPanel(new \MilanKyncl\Debugbar\Bar\Panels\ExecutionTimer());
+			$this->_bar->addPanel(new \MilanKyncl\Debugbar\Bar\Panels\ExecutionTimer())
+			;
+			$this->_bar->addPanel(new \MilanKyncl\Debugbar\Bar\Panels\ViewRender());
 
 			$this->_bar->addPanel(new \MilanKyncl\Debugbar\Bar\Panels\DatabaseProfiler());
+
+			$this->_bar->addPanel(new \MilanKyncl\Debugbar\Bar\Panels\RouterInterface());
 
 			// Register shutdown function
 
@@ -52,9 +56,15 @@ class PhalconDebugbar {
 
 	public function shutdown() {
 
-		$this->_bar->shutdownPanels();
+		// Check for AJAX Request
 
-		$this->_bar->render();
+		if(!isset($_SERVER['HTTP_X_REQUESTED_WITH']) || strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) != 'xmlhttprequest') {
+
+			$this->_bar->shutdownPanels();
+
+			$this->_bar->render();
+
+		}
 
 	}
 

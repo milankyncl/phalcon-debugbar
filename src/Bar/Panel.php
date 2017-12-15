@@ -11,19 +11,16 @@ namespace MilanKyncl\Debugbar\Bar;
 abstract class Panel extends \Phalcon\Mvc\User\Component {
 
 	protected $_icon;
+	protected $_title;
 
 	public function boot() {}
 
 	public function shutdown() {}
 
-	public function getIcon() {
+	public function getIcon() { return $this->_icon; }
 
-		return $this->_icon;
-	}
+	public function getLabel() { return; }
 
-	public function getLabel() {
-
-		return '';
-	}
+	public function getTitle() { return $this->_title; }
 
 }
