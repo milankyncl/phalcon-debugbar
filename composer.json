@@ -20,5 +20,8 @@
 		"psr-4": {
 			"MilanKyncl\\Debugbar\\": "src/"
 		}
-	}
+	},
+    "require-dev": {
+        "phpunit/phpunit": "^5"
+    }
 }

@@ -6,11 +6,9 @@ package.json
 .idea
 *.sublime-project
 *.sublime-workspace
-composer.lock
 composgit per.phar
 /nbproject
 /vendor
 .vagrant
 Vagrantfile
 /build
-/tests

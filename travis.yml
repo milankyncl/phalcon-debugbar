@@ -1,0 +1,43 @@
+language: php
+
+sudo: required
+dist: trusty
+
+php:
+  - 5.6
+
+matrix:
+  include:
+    - php: 7.0
+      env: ZEND_BACKEND="--backend=ZendEngine3" PHALCON_VERSION="v3.0.0"
+    - php: 7.0
+      env: ZEND_BACKEND="--backend=ZendEngine3" PHALCON_VERSION="v3.0.1"
+    - php: 7.0
+      env: ZEND_BACKEND="--backend=ZendEngine3" PHALCON_VERSION="3.0.x"
+
+git:
+  depth: 1
+
+env:
+  global:
+    - ZEND_DONT_UNLOAD_MODULES=1
+    - PATH="$PATH:~/bin"
+    - DISPLAY=":99.0"
+    - APPLICATION_ENV=testing
+  matrix:
+    - PHALCON_VERSION="3.0.x"
+    - PHALCON_VERSION="v3.0.0"
+    - PHALCON_VERSION="v3.0.1"
+
+install:
+  - git clone -q --depth=1 https://github.com/phalcon/cphalcon.git -b ${PHALCON_VERSION}
+  - '( cd cphalcon; zephir fullclean && zephir generate $ZEND_BACKEND )'
+  - (cd cphalcon/ext; export CFLAGS="-g3 -O1 -std=gnu90 -Wall -DZEPHIR_RELEASE=1"; /usr/bin/phpize &> /dev/null && ./configure --silent --enable-phalcon &> /dev/null && make --silent -j2 &> /dev/null && make --silent install)
+  - phpenv config-add cphalcon/tests/_ci/phalcon.ini
+
+notifications:
+  email:
+    recipients:
+      - kontakt@milankyncl.cz
+    on_success: change
+    on_failure: always
