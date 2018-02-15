@@ -9,13 +9,14 @@ cache:
   directories:
     - vendor
     - ~/.composer/cache
+    - ~/cphalcon
 
 before_install:
   - composer install --prefer-source --no-interaction
   - vendor/bin/install-phalcon.sh 3.0.x
 
 script:
-  - vendor/bin/phpunit
+  - vendor/bin/phpunit tests
 
 notifications:
   email:
