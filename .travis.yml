@@ -31,8 +31,8 @@ env:
 
 install:
   - git clone -q --depth=1 https://github.com/phalcon/cphalcon.git -b ${PHALCON_VERSION}
-  - (cd cphalcon; zephir fullclean && zephir generate $ZEND_BACKEND)
-  - (cd cphalcon/ext; export CFLAGS="-g3 -O1 -std=gnu90 -Wall -DZEPHIR_RELEASE=1"; /usr/bin/phpize &> /dev/null && ./configure --silent --enable-phalcon &> /dev/null && make --silent -j2 &> /dev/null && make --silent install)
+  - cd cphalcon; zephir fullclean && zephir generate $ZEND_BACKEND
+  - cd cphalcon/ext; export CFLAGS="-g3 -O1 -std=gnu90 -Wall -DZEPHIR_RELEASE=1"; /usr/bin/phpize &> /dev/null && ./configure --silent --enable-phalcon &> /dev/null && make --silent -j2 &> /dev/null && make --silent install
   - phpenv config-add cphalcon/tests/_ci/phalcon.ini
   - travis_retry composer install --no-progress --prefer-dist
 
