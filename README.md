@@ -4,6 +4,7 @@
 [![Total Downloads](https://poser.pugx.org/milankyncl/phalcon-debugbar/downloads)](https://packagist.org/packages/milankyncl/phalcon-debugbar)
 [![Latest Unstable Version](https://poser.pugx.org/milankyncl/phalcon-debugbar/v/unstable)](https://packagist.org/packages/milankyncl/phalcon-debugbar)
 [![License](https://poser.pugx.org/milankyncl/phalcon-debugbar/license)](https://packagist.org/packages/milankyncl/phalcon-debugbar)
+[![Build Status](https://travis-ci.org/milankyncl/phalcon-debugbar.svg?branch=master)](https://travis-ci.org/milankyncl/phalcon-debugbar)
 
 Phalcon Debugbar for PHP Phalcon 3.x.x. You can view 4 standard panels right now - execution timer, view renderering status, database profiler and router result. You can optionally enable specific remote addresses, so you can view debugbar even in production mode.
 
