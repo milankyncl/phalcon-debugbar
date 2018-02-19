@@ -219,8 +219,10 @@ return function($panels) { ?>
             padding: 6px 8px;
             text-align: left;
             font-weight: 400;
+            vertical-align: top;
         }
         .mk-phalcon-debugbar .debugbar-window table th {
+
             font-weight: bold;
         }
 

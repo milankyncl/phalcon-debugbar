@@ -29,15 +29,6 @@ class Bar {
 			die();
 
 		}
-
-		if(isset($_GET['mk_debugbar_assets']) && $_GET['mk_debugbar_assets'] == 'css') {
-
-			echo file_get_contents(__DIR__ . '/assets/build/css/debugbar.min.css');
-
-			die();
-
-		}
-
 	}
 
 	/**
